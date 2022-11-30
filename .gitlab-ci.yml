@@ -7,11 +7,11 @@ build:
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
     - apk add git
-    - git clone -b stable https://git.pleroma.social/pleroma/pleroma.git
-    - cd pleroma
+    - git clone -b stable https://akkoma.dev/AkkomaGang/akkoma.git
+    - cd akkoma
     - VERSION=$(git describe --tags --abbrev=0)
     - cd ..
-    - rm -r -f pleroma
+    - rm -r -f akkoma
   script:
     - docker build --pull -t $CI_REGISTRY_IMAGE:$VERSION -t $CI_REGISTRY_IMAGE:latest .
     - docker push $CI_REGISTRY_IMAGE:$VERSION
