@@ -3,8 +3,12 @@ FROM docker.io/hexpm/elixir:1.13.4-erlang-24.3.4.5-alpine-3.15.6
 ENV MIX_ENV=prod
 
 ARG HOME=/opt/akkoma
+ARG AKKOMA_VER=stable
 
 RUN apk add git gcc g++ musl-dev make cmake file-dev exiftool ffmpeg imagemagick libmagic ncurses postgresql-client
+
+RUN git clone -b stable https://akkoma.dev/AkkomaGang/akkoma.git $HOME \
+    && git checkout ${AKKOMA_VER}
 
 EXPOSE 4000
 
