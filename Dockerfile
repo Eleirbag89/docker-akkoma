@@ -1,14 +1,13 @@
-FROM docker.io/elixir:1.11.4-alpine
+FROM docker.io/hexpm/elixir:1.13.4-erlang-24.3.4.5-alpine-3.15.6
 
-ARG PLEROMA_VER=stable
+ARG AKKOMA_VER=stable
 ARG UID=911
 ARG GID=911
 ENV MIX_ENV=prod
 
 RUN echo "http://nl.alpinelinux.org/alpine/latest-stable/community" >> /etc/apk/repositories \
     && apk update \
-    && apk add git gcc g++ musl-dev make cmake file-dev \
-    exiftool imagemagick libmagic ncurses postgresql-client ffmpeg
+    && apk add git gcc g++ musl-dev make cmake file-dev exiftool ffmpeg imagemagick libmagic ncurses postgresql-client
 
 RUN addgroup -g ${GID} akkoma \
     && adduser -h /akkoma -s /bin/false -D -G akkoma -u ${UID} akkoma
@@ -24,14 +23,14 @@ USER akkoma
 WORKDIR /akkoma
 
 RUN git clone -b stable https://akkoma.dev/AkkomaGang/akkoma.git /akkoma \
-    && git checkout ${PLEROMA_VER}
+    && git checkout ${AKKOMA_VER}
 
 RUN echo "import Mix.Config" > config/prod.secret.exs \
     && mix local.hex --force \
     && mix local.rebar --force \
     && mix deps.get --only prod \
     && mkdir release \
-    && mix release --path /pleroma
+    && mix release --path /akkoma
 
 COPY ./config.exs /etc/akkoma/config.exs
 
