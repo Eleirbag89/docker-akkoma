@@ -18,9 +18,8 @@ RUN adduser -u $UID -G $UNAME -D -h $HOME $UNAME
 WORKDIR /opt/akkoma
 
 USER $UNAME
-RUN echo "import Mix.Config" > config/prod.secret.exs \
-    && mix local.hex --force \
+RUN mix local.hex --force \
     && mix local.rebar --force \
-    && mix deps.get --only prod \
+    && mix deps.get --only prod
 
-ENTRYPOINT ["/opt/akkoma/docker-entrypoint.sh"]
+CMD ["/opt/akkoma/docker-entrypoint.sh"]
