@@ -7,8 +7,7 @@ ARG AKKOMA_VER=stable
 
 RUN apk add git gcc g++ musl-dev make cmake file-dev exiftool ffmpeg imagemagick libmagic ncurses postgresql-client
 
-RUN git clone -b stable https://akkoma.dev/AkkomaGang/akkoma.git $HOME \
-    && git checkout ${AKKOMA_VER}
+RUN git clone -b stable https://akkoma.dev/AkkomaGang/akkoma.git $HOME 
 
 EXPOSE 4000
 
