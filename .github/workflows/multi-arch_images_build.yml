@@ -15,7 +15,10 @@ jobs:
     runs-on: ubuntu-20.04
     
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+        with: 
+          repository: 'https://akkoma.dev/AkkomaGang/akkoma.git'
+          ref: 'stable'
         
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -30,15 +33,15 @@ jobs:
           dockerfiles: |
             ./Dockerfile
             
-      - name: Push To quay.io
-        id: push-to-quay
-        uses: redhat-actions/push-to-registry@v2
-        with:
-          image: ${{ steps.build-image.outputs.image }}
-          tags: ${{ steps.build-image.outputs.tags }}
-          registry: ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAMESPACE }}
-          username: ${{ secrets.QUAY_USER }}
-          password: ${{ secrets.QUAY_PWD }}
+#      - name: Push To quay.io
+#        id: push-to-quay
+#        uses: redhat-actions/push-to-registry@v2
+#        with:
+#          image: ${{ steps.build-image.outputs.image }}
+#          tags: ${{ steps.build-image.outputs.tags }}
+#          registry: ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAMESPACE }}
+#          username: ${{ secrets.QUAY_USER }}
+#          password: ${{ secrets.QUAY_PWD }}
 
-      - name: Print image url
-        run: echo "Image pushed to ${{ steps.push-to-quay.outputs.registry-paths }}"
+#      - name: Print image url
+#        run: echo "Image pushed to ${{ steps.push-to-quay.outputs.registry-paths }}"
