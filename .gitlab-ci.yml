@@ -15,13 +15,5 @@ build:
     - podman push $CI_REGISTRY_IMAGE:$VERSION
     - podman push $CI_REGISTRY_IMAGE:latest
 
-include:
-  - template: Security/Container-Scanning.gitlab-ci.yml
-
 variables:
   DOCKER_IMAGE: $CI_REGISTRY_IMAGE:latest
-
-container_scanning:
-  variables:
-    GIT_STRATEGY: fetch
-    DOCKERFILE_PATH: "./Dockerfile"
