@@ -21,7 +21,7 @@ jobs:
           ref: 'stable'
         
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
+        uses: docker/setup-qemu-action@v2
         
       - name: Build image 
         id: build-image
